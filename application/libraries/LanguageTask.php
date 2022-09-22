@@ -301,7 +301,8 @@ abstract class Task {
         $workdir = $this->workdir;
         chdir($workdir);
 
-        if ($stdin) {
+        // "0" is falsy, so an additional check is needed
+        if ($stdin || $stdin == "0") {
             $f = fopen('prog.in', 'w');
             fwrite($f, $stdin);
             fclose($f);
