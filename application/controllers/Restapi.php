@@ -88,6 +88,7 @@ class Restapi extends REST_Controller {
 
     // Put (i.e. create or update) a file
     public function files_put($fileId=FALSE) {
+        $this->error("Debug error");
         if ($fileId === FALSE) {
             $this->error('No file id in URL');
         }
