@@ -126,7 +126,7 @@ abstract class Task {
         $this->user = sprintf("jobe%02d", $this->userId);
 
         // Give the user RW access.
-        exec("setfacl -m u:{$this->user}:rwX {$this->workdir}");
+        exec("setfacl -Rdm u:{$this->user}:rwX {$this->workdir}");
     }
 
 
