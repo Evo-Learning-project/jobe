@@ -129,7 +129,7 @@ abstract class Task {
         // files contained in it, as well as any future files 
         // and sub-folders inside of the folder
         // TODO double check this (might need to roll back)
-        exec("setfacl -Rdm u:{$this->user}:rwX {$this->workdir}");
+        exec("setfacl -m u:{$this->user}:rwX {$this->workdir}");
     }
 
 
