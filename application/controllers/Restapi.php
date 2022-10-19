@@ -219,11 +219,13 @@ class Restapi extends REST_Controller {
                 $this->log('debug', "runs_post: compiling job {$this->task->id}");
                 $this->task->compile();
 
+                // TODO save to task the list of files in the workdir - use scandir
+
                 if (empty($this->task->cmpinfo)) {
                     $this->log('debug', "runs_post: executing job {$this->task->id}");
                     $this->task->execute();
                 }
-
+                // TODO if task succeeds, return all the files in the workdir of the task - use scandir and arraydiff
             } finally {
                 // Delete task run directory unless it's a debug run
                 $this->task->close(!$debug);

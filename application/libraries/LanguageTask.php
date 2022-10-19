@@ -125,7 +125,10 @@ abstract class Task {
         $this->userId = $this->getFreeUser();
         $this->user = sprintf("jobe%02d", $this->userId);
 
-        // Give the user RW access.
+        // Give the user RW access to the folder and all the 
+        // files contained in it, as well as any future files 
+        // and sub-folders inside of the folder
+        // TODO double check this (might need to roll back)
         exec("setfacl -Rdm u:{$this->user}:rwX {$this->workdir}");
     }
 

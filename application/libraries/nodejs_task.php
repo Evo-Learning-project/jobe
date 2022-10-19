@@ -23,6 +23,7 @@ class Nodejs_Task extends Task {
     }
 
     public function compile() {
+        // simply copy the source code to the destination "compiled" file
         $this->executableFileName = $this->sourceFileName;
         if (strpos('.js', $this->executableFileName) != strlen($this->executableFileName) - 3) {
             $this->executableFileName .= '.js';
