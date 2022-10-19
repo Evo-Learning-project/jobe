@@ -89,7 +89,7 @@ class Restapi extends REST_Controller {
     // Put (i.e. create or update) a file
     public function files_put($fileId=FALSE) {
         if ($fileId === FALSE) {
-            $this->error('No file id in URL DEBUG');
+            $this->error('No file id in URL - DEBUG');
         }
         $contentsb64 = $this->put('file_contents', FALSE);
         if ($contentsb64 === FALSE) {
@@ -113,7 +113,7 @@ class Restapi extends REST_Controller {
     // Check file
     public function files_head($fileId) {
         if (!$fileId) {
-            $this->error('head: missing file ID parameter in URL');
+            $this->error('head: missing file ID parameter in URL - DEBUG');
         } else if (FileCache::file_exists($fileId)) {
             $this->log('debug', "head: file $fileId exists");
             $this->response(NULL, 204);
@@ -125,7 +125,7 @@ class Restapi extends REST_Controller {
 
     // Post file
     public function files_post() {
-        $this->error('file_post: not implemented on this server', 403);
+        $this->error('file_post: not implemented on this server - DEBUG', 403);
     }
 
     // ****************************
