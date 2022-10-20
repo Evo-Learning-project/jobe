@@ -76,6 +76,8 @@ class FileCache {
         }
         if (preg_match(MD5_PATTERN, $fileid) !== 1) {
             $result = @file_put_contents(FILE_CACHE_BASE . '/' . $fileid, $contents);
+            // make file writable
+            chmod(FILE_CACHE_BASE . '/' . $fileid, fileperms($filename) | 16);
         } else {
             $topdir = FILE_CACHE_BASE . '/' . substr($fileid, 0, 2);
             $seconddir = $topdir . '/' . substr($fileid, 2, 2);
@@ -87,6 +89,8 @@ class FileCache {
                 @mkdir($seconddir, 0751);
             }
             $result = @file_put_contents($fullpath, $contents);
+            // make file writable
+            chmod($fullpath, fileperms($filename) | 16);
         }
         return $result;
     }
