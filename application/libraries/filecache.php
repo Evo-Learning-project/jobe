@@ -78,7 +78,7 @@ class FileCache {
             $result = @file_put_contents(FILE_CACHE_BASE . '/' . $fileid, $contents);
             // set file owner
             if($ownerid != FALSE) {
-                chown(FILE_CACHE_BASE . '/' . $fileid, $ownerid)
+                chown(FILE_CACHE_BASE . '/' . $fileid, $ownerid);
             }
         } else {
             $topdir = FILE_CACHE_BASE . '/' . substr($fileid, 0, 2);
@@ -93,7 +93,7 @@ class FileCache {
             $result = @file_put_contents($fullpath, $contents);
             // set file owner
             if($ownerid != FALSE) {
-                chown($fullpath, $ownerid)
+                chown($fullpath, $ownerid);
             }
         }
         return $result;
