@@ -140,7 +140,7 @@ abstract class Task {
             $destPath = $this->workdir . '/' . $filename;
             if (!FileCache::file_exists($fileId) ||
                ($contents = FileCache::file_get_contents($fileId)) === FALSE ||
-               (FileCache::file_put_contents($destPath, $contents, $this->user)) === FALSE) {
+               (file_put_contents($destPath, $contents)) === FALSE) {
                 throw new JobException('One or more of the specified files is missing/unavailable',
                         'file(s) not found', 404);
             }
