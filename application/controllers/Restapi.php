@@ -125,7 +125,7 @@ class Restapi extends REST_Controller {
 
     // Post file
     public function files_post() {
-        $this->error('file_post: not implemented on this server - DEBUG 6', 403);
+        $this->error('file_post: not implemented on this server - DEBUG 7', 403);
     }
 
     // ****************************
