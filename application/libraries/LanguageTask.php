@@ -126,7 +126,7 @@ abstract class Task {
         $this->user = sprintf("jobe%02d", $this->userId);
 
         // Give the user RW access to the folder
-        $execResult = exec("setfacl -Rdm u:{$this->user}:rwX {$this->workdir}");
+        $execResult = exec("setfacl -m u:{$this->user}:rwX {$this->workdir}");
         if($execResult === FALSE) {
             throw new JobException("couldn't run setfacl on user {$this->user}");
         }
@@ -148,11 +148,12 @@ abstract class Task {
                 throw new JobException('One or more of the specified files is missing/unavailable',
                         'file(s) not found', 404);
             }
-            // set current user as the owner of the loaded file(s)
-            // $chownResult = chown($destPath, $this->user);
-            // if($chownResult === FALSE) {
-            //     throw new JobException("Couldn't set owner {$this->user}", 500);
-            // }
+            // give the least restrictive permission to files to allow
+            // reading & writing (the parent dir has more restrictive perms)
+            $chmodResult = chmod($destPath, 0777);
+            if($chmodResult === FALSE) {
+                throw new JobException("Couldn't set perms for {$destPath}, {$this->user}", 500);
+            }
         }
     }
 
