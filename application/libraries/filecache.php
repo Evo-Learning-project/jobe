@@ -68,7 +68,7 @@ class FileCache {
      * second level directory names respectively.
      * @param string $fileid the external file id (aka filename).
      */
-    public static function file_put_contents($fileid, $contents) {
+    public static function file_put_contents($fileid, $contents, $ownerid=FALSE) {
         $freespace = disk_free_space(FILE_CACHE_BASE);
         $volumesize = disk_total_space(FILE_CACHE_BASE);
         if (TESTING_FILE_CACHE_CLEAR || $freespace / $volumesize > MAX_PERCENT_FULL) {
@@ -76,8 +76,10 @@ class FileCache {
         }
         if (preg_match(MD5_PATTERN, $fileid) !== 1) {
             $result = @file_put_contents(FILE_CACHE_BASE . '/' . $fileid, $contents);
-            // make file writable
-            chmod(FILE_CACHE_BASE . '/' . $fileid, fileperms($FILE_CACHE_BASE . '/' . $fileid) | 16);
+            // set file owner
+            if($ownerid != FALSE) {
+                chown(FILE_CACHE_BASE . '/' . $fileid, $ownerid)
+            }
         } else {
             $topdir = FILE_CACHE_BASE . '/' . substr($fileid, 0, 2);
             $seconddir = $topdir . '/' . substr($fileid, 2, 2);
@@ -89,8 +91,10 @@ class FileCache {
                 @mkdir($seconddir, 0751);
             }
             $result = @file_put_contents($fullpath, $contents);
-            // make file writable
-            chmod($fullpath, fileperms($fullpath) | 16);
+            // set file owner
+            if($ownerid != FALSE) {
+                chown($fullpath, $ownerid)
+            }
         }
         return $result;
     }
