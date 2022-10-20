@@ -146,7 +146,10 @@ abstract class Task {
                         'file(s) not found', 404);
             }
             // set current user as the owner of the loaded file(s)
-            @chown($destPath, $this->user);
+            $chownResult = chown($destPath, $this->user);
+            if($chownResult === FALSE) {
+                throw new JobException("Couldn't set owner {$this->user}", 500);
+            }
         }
     }
 
