@@ -146,7 +146,7 @@ abstract class Task {
                         'file(s) not found', 404);
             }
             // set current user as the owner of the loaded file(s)
-            @chown($destPath, $this->user)
+            @chown($destPath, $this->user);
         }
     }
 
