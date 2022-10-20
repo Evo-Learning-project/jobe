@@ -126,7 +126,10 @@ abstract class Task {
         $this->user = sprintf("jobe%02d", $this->userId);
 
         // Give the user RW access to the folder
-        exec("setfacl -m u:{$this->user}:rwX {$this->workdir}");
+        $execResult = exec("setfacl -Rdm u:{$this->user}:rwX {$this->workdir}");
+        if($execResult === FALSE) {
+            throw new JobException("couldn't run setfacl on user {$this->user}");
+        }
     }
 
 
